@@ -54,3 +54,42 @@ document.querySelector("#b-9").onclick = () => {
 document.querySelector("#b-10").onclick = () => {
     document.querySelector("#o-10").style.backgroundColor = document.querySelector("#i-10").value;
 }
+
+document.querySelector("#b-11").onclick = () => {
+    document.querySelector("#i-11-1").value = document.querySelector("#i-11-0").value;
+}
+
+document.querySelector("#b-12").onclick = () => {
+    document.querySelector("#o-12").innerHTML = document.querySelector("#i-12").value;
+}
+
+document.querySelector("#i-13").oninput = () => {
+    document.querySelector("#o-13").innerHTML = document.querySelector("#i-13").value;
+}
+
+document.querySelector("#b-14").onclick = () => {
+    document.querySelector("#o-14").innerHTML = document.querySelector("#i-14").value;
+}
+
+document.querySelector("#b-15").onclick = () => {
+    document.querySelector("#o-15-0").value = document.querySelector("#i-15").value;
+    document.querySelector("#o-15-1").innerHTML = document.querySelector("#i-15").value;
+}
+
+document.querySelector("#b-16").onclick = () => {
+    document.querySelector("#o-16").innerHTML = document.querySelector("#s-16").value;
+}
+
+document.querySelector("#s-17").onchange = () => {
+    document.querySelector("#o-17").innerHTML = document.querySelector("#s-17").value;
+}
+
+document.querySelector("#s-18").onchange = () => {
+    document.querySelector("#o-18").value = document.querySelector("#s-18").value;
+}
+
+document.querySelector("#o-19").value = document.querySelector("#i-19").textContent;
+
+document.querySelector("#s-20").onchange = () => {
+    document.querySelector("#o-20").value = document.querySelector("#s-20").value;
+}
