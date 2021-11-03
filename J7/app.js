@@ -24,3 +24,35 @@ function task6(i, j) {
     } while ((number < i) || (number > j));
     return number;
 }
+
+function task7() {
+    let rgb = "rgb(";
+    for (let i = 0; i < 3; i++) {
+        if (i == 2) {
+            rgb += parseInt(task6(0, 255)) + ");";
+        } else {
+            rgb += parseInt(task6(0, 255)) + ", ";
+        }
+    }
+    return rgb;
+}
+
+function task8(i) {
+    return (i.trim());
+}
+
+function task9(i) {
+    if (i % 2) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function task10(i, j) {
+    if (i >= j) {
+        return i;
+    } else {
+        return j;
+    }
+}
