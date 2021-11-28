@@ -1,0 +1,13 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+span {
+    font-style: italic;
+}
+
+.block-10 {
+    background-color: red;
+    width: 75px;
+    height: 75px;
+}
