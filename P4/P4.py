@@ -1,4 +1,7 @@
-import requests, threading, random;
+import requests, threading, random, json, wikipediaapi, codecs;
+
+#Планы:
+#1.User-friendly интерфейс
 
 def set_interval(func, sec):
     """
@@ -26,25 +29,104 @@ def _getRequest(server, param):#при разрыве можно заново п
     return r.json();
 
 
+def _messageAnswer(message):
+    """
+    Функция для поиска ответа в словаре message:
+    _messageAnswer(message);
+    message == сообщение на который нужен ответ
+    """
+    global messages;
+    for key in messages:
+        if message.casefold().find(key) != -1:
+            if messages[key] == " {image} ":
+                delete = "";
+                for i in range(0, (message.casefold().find(key) + len(key))):
+                    delete += message[i];
+                message.replace(delete,"",1);
+                del delete;
+                paramForImage["query"] = message;
+                image = _getRequest(serverForImage, paramForImage);
+                try:
+                    if image["total"] != 0 or image["total"] != str(0):
+                        #if "description" in image["results"][0] and "raw" in image["results"][0]["urls"]:
+                        try:
+                            return (image["results"][0]["description"] + " " + image["results"][0]["urls"]["small"]);
+                        except:
+                            print("Ошибка отправки картинки!");
+                            return "Error 0: cant f an image";
+                    else:
+                        return "Картинка не найдена.(";
+                except:
+                       print("Ошибка отправки картинки!");
+                       return "Error 1: cant get to img server";
+            elif messages[key] == " {wiki} ":
+                try:
+                    startWikiSearch = message.find("&quot") + 6;
+                    endWikiSearch = message.rfind("&quot");
+                    searchForWiki = "";
+                    if (startWikiSearch + 1) < endWikiSearch:
+                        for i in range(startWikiSearch, endWikiSearch):
+                            searchForWiki += message[i];
+                        wikiSearch = wikipediaapi.Wikipedia(language="ru", extract_format=wikipediaapi.ExtractFormat.WIKI);
+                        wikiText = wikiSearch.page(searchForWiki);
+                        if wikiText.exists():
+                            text = "";
+                            for i in range(0, 1001):
+                                text += wikiText.text[i];
+                            return text;
+                        else:
+                            return "Ничего не нашёл.(";
+                    return "Неправильный синтаксис для запроса!)"
+                except:
+                    print("Ошибка вики запроса!");
+                    return "Error 2: cant get to wiki server";
+            return messages[key];
+    return message;
+
+def _getLongPollServer():
+    global paramForGetLongPoll, serverForGetLongPoll, serverForGetLongPollServer, paramForGetLongPollServer;
+    resultOfGetLongPollServer = _getRequest(serverForGetLongPollServer, paramForGetLongPollServer);
+    paramForGetLongPoll = { "act": "a_check", "key": resultOfGetLongPollServer["response"]["key"], "ts": resultOfGetLongPollServer["response"]["ts"], "wait": "25", "mode": "2", "version": "2" };
+    serverForGetLongPoll = resultOfGetLongPollServer["response"]["server"];
+
+
 access_token = "9ee4bcff5db1eca3a295d8d43cdff2d1eb9468af10995cd101abc4eb829d148eabbaf02e6a6c6bb5ae9b2";
+signature = "Безымянный:\n";
+updateTimeInSec = 20;
+
+client_id = "izMKs7X5Yrns-ZvFtYf-roFpHYrszYnPC9zKFiqT6_Y";
+
 
 paramForGetLongPollServer = { "need_pts": "1", "lp_version": "12", "v": "5.131" };
 paramForGetLongPollServer["access_token"] = access_token;
 serverForGetLongPollServer = "api.vk.com/method/messages.getLongPollServer";
 
-resultOfGetLongPollServer = _getRequest(serverForGetLongPollServer, paramForGetLongPollServer);
-
-paramForGetLongPoll = { "act": "a_check", "key": resultOfGetLongPollServer["response"]["key"], "ts": resultOfGetLongPollServer["response"]["ts"], "wait": "25", "mode": "2", "version": "2" };
-serverForGetLongPoll = resultOfGetLongPollServer["response"]["server"];
-
 paramForSend = { "v": "5.131" };
 paramForSend["access_token"] = access_token;
 serverForSend = "api.vk.com/method/messages.send"
 
+paramForImage = { "client_id": client_id };
+serverForImage = "api.unsplash.com/search/photos";
+
+try:
+    _getLongPollServer();
+    print("Первое поключение удалось!");
+except:
+    print("Первое поключение провалилось!");
+
 tempOfMassages = [];
 
+try:
+    #file = open("bot_data.txt");
+    file = codecs.open( "bot_data.txt", "r", "utf_8_sig" )
+    bot_data = file.read();
+    messages = json.loads(bot_data);
+    print("Внедрение базы ответов получилось!");
+except:
+    print("Внедрение базы ответов не получилось!");
+
 def _botStart():
-    global serverForGetLongPoll, paramForGetLongPoll, paramForSend, serverForSend;
+    global serverForGetLongPoll, paramForGetLongPoll, paramForSend, serverForSend, signature;
     ticOfBot = _getRequest(serverForGetLongPoll, paramForGetLongPoll);
     paramForGetLongPoll["ts"] = str(ticOfBot["ts"]);
     print(ticOfBot);
@@ -59,7 +141,15 @@ def _botStart():
                 paramForSend["chat_id"] = str(int(ticOfBot["updates"][i][3]) - 2000000000);
                 paramForSend["user_id"] = ticOfBot["updates"][i][3];
                 paramForSend.pop("chat_id");
-            paramForSend["message"] = ticOfBot["updates"][i][5];
+            paramForSend["reply_to"] = ticOfBot["updates"][i][1];
+            paramForSend["message"] = signature + _messageAnswer(ticOfBot["updates"][i][5]);
             _getRequest(serverForSend, paramForSend);
 
-set_interval(_botStart, 21);
+def _botAntiError():
+    try:
+        _botStart();
+    except:
+        print("Ошибка поключения, пробую переподключиться!");
+        _getLongPollServer();
+
+set_interval(_botAntiError, updateTimeInSec);
