@@ -90,9 +90,21 @@ def _getLongPollServer():
     serverForGetLongPoll = resultOfGetLongPollServer["response"]["server"];
 
 
-access_token = "9ee4bcff5db1eca3a295d8d43cdff2d1eb9468af10995cd101abc4eb829d148eabbaf02e6a6c6bb5ae9b2";
-signature = "Безымянный:\n";
-updateTimeInSec = 20;
+#access_token = "9ee4bcff5db1eca3a295d8d43cdff2d1eb9468af10995cd101abc4eb829d148eabbaf02e6a6c6bb5ae9b2";
+#signature = "Безымянный:\n";
+#updateTimeInSec = 60;
+access_token = input("\t!Введите токен\n1.Вбейте в адресной строке браузера это: https://oauth.vk.com/authorize?client_id=6121396&scope=501202911&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token&revoke=1\n2.Подтвердите(разрешить)\n3.Из адресной строки, что вы получили введите данные между \'access_token=\' и \'&\': ");
+signature = input("\t!Введите сигнатуру для бота:");
+if signature == "2121":
+    signature = "Безымянный:\n";
+isnRight = True;
+updateTimeInSec = 0;
+while isnRight and updateTimeInSec <= 0:
+    try:
+        updateTimeInSec = int(input("\t!Введите время для обновления бота(в секундах, рекомендую ставить 60):"));
+        isnRight = False;
+    except:
+        print("Время введено не верно!");
 
 client_id = "izMKs7X5Yrns-ZvFtYf-roFpHYrszYnPC9zKFiqT6_Y";
 
