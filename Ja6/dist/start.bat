@@ -1,0 +1,1 @@
+java -jar "Ja6.jar" 
