@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:theme="@style/Theme.As1.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.As1.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:fontFamily="@font/major_mono_display"
+        android:text="@string/logo"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/white" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <EditText
+        android:id="@+id/user_field"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="50sp"
+        android:layout_marginTop="100sp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/major_mono_display"
+        android:hint="@string/hint_user_field"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:minHeight="50sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <Button
+        android:id="@+id/main_btn"
+        android:fontFamily="@font/major_mono_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_field"
+        android:layout_marginTop="50sp"
+        android:backgroundTint="@color/black"
+        android:text="@string/main_btn" />
+
+    <TextView
+        android:id="@+id/result_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_btn"
+        android:layout_marginTop="50sp"
+        android:layout_alignParentBottom="true"
+        android:textSize="21sp"
+        android:fontFamily="@font/major_mono_display"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:text="" />
+</RelativeLayout>

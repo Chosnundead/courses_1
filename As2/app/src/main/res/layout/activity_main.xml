@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/layout">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="13dp"
+        android:backgroundTint="@color/light_orange"
+        android:contentDescription="@string/search_button"
+        android:onClick="onSearchButtonClick"
+        android:src="@drawable/ic_floating_action_bar"
+        app:rippleColor="@color/orange"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/search_input"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:textSize="21sp"-->
+    <!--            android:ems="10"-->
+    <!--            android:hint="@string/search"-->
+    <!--            android:textAlignment="center" />-->
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="bottom" />
+</FrameLayout>
