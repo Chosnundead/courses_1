@@ -1,0 +1,10 @@
+file = open("Courses/P8/test.txt", "w+")
+file.write("Hello\nWorld!")
+file.close()
+fileRead = open("Courses/P8/test.txt", "r+")
+# print(fileRead.read(3))
+# print(fileRead.readlines())
+for line in fileRead:
+    print(line)
+    print("===")
+fileRead.close()
