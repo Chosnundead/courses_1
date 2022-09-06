@@ -41,3 +41,53 @@
 
 # print(test(9, 3))
 # print(1)
+
+# nums = {1,2,3,4,1,1}
+# print(nums)
+
+# import itertools
+# for i in itertools.count(8):
+#     if i == 21:
+#         break
+#     print(i)
+
+# import itertools
+# nums = list(itertools.accumulate(range(8)))
+# print(nums)
+# letters = ["A", "B", "C"]
+# print(list(itertools.product(letters, range(2))))
+# print(list(itertools.permutations(letters)))
+
+# def fib(n):
+#     if n == 0:
+#         return 0
+#     if n == 1:
+#         return 1
+#     return fib(n-2) + fib(n-1)
+
+# [print(fib(i)) for i in range(5)]
+
+class Pizza:
+    def __init__(self, tomato):
+        self.tomato = tomato
+        self._isGood = False
+    
+    @property
+    def isGood(self):
+        # return self.isGood
+        # return self._isGood
+        pass
+
+    # @isGood.getter
+    # def getIsGood(s):
+    #     return s._isGood
+
+    @isGood.setter
+    def isGood(self, value):
+        self._isGood = value
+
+myPizza = Pizza("da")
+print(myPizza._isGood)
+myPizza._isGood = True
+# myPizza.setIsGood(True)
+print(myPizza._isGood)
