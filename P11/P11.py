@@ -67,27 +67,131 @@
 
 # [print(fib(i)) for i in range(5)]
 
-class Pizza:
-    def __init__(self, tomato):
-        self.tomato = tomato
-        self._isGood = False
-    
-    @property
-    def isGood(self):
-        # return self.isGood
-        # return self._isGood
-        pass
+# class Pizza:
+#     def __init__(self, tomato):
+#         self.tomato = tomato
+#         self._isGood = False
 
-    # @isGood.getter
-    # def getIsGood(s):
-    #     return s._isGood
+#     @property
+#     def isGood(self):
+#         # return self.isGood
+#         # return self._isGood
+#         pass
 
-    @isGood.setter
-    def isGood(self, value):
-        self._isGood = value
+#     # @isGood.getter
+#     # def getIsGood(s):
+#     #     return s._isGood
 
-myPizza = Pizza("da")
-print(myPizza._isGood)
-myPizza._isGood = True
-# myPizza.setIsGood(True)
-print(myPizza._isGood)
+#     @isGood.setter
+#     def isGood(self, value):
+#         self._isGood = value
+
+# myPizza = Pizza("da")
+# print(myPizza._isGood)
+# myPizza._isGood = True
+# # myPizza.setIsGood(True)
+# print(myPizza._isGood)
+
+# Magic square:
+# arr = [[8, 1, 6], [3, 5, 7], [4, 9, 2]]
+
+
+# def isMagic(arr):
+#     number = sum(arr[0])
+#     for item in arr:
+#         if sum(item) != number:
+#             return False
+#     for i in range(len(arr)):
+#         temp = 0
+#         for item in arr:
+#             temp += item[i]
+#         if number != temp:
+#             return False
+#     temp = [0, 0]
+#     for i in range(len(arr)):
+#         temp[0] += arr[i][i]
+#         temp[1] += arr[i][len(arr) - 1 - i]
+#     if temp[0] != number or temp[1] != number:
+#         return False
+#     return True
+
+
+# print(isMagic(arr))
+
+# Разделение списка на подсписки:
+# from itertools import combinations as comb
+
+
+# string = "a f z"
+
+
+# def task(string):
+#     arr = string.split(" ")
+#     result = []
+#     for i in range(len(arr) + 1):
+#         result.extend(list(comb(arr, i)))
+#     return result
+
+
+# print(task(string))
+
+# Ходы шахматного ферзя:
+# from aifc import Error
+
+
+# string = "c4"
+
+
+# def drawTable(string):
+#     line = "abcdefgh"
+#     mask = {}
+#     counter = 0
+#     for letter in line:
+#         mask[letter] = counter
+#         counter += 1
+
+#     table = [["." for i in range(8)] for i in range(8)]
+#     qX = mask[string[0]]
+#     qY = int(string[1])
+
+#     # possible ways for queen
+#     for i in range(8):
+#         matrix = [[-1, 1, 0, 0, -1, 1, -1, 1], [0, 0, -1, 1, -1, -1, 1, 1]]
+#         counter = 0
+#         while True:
+#             try:
+#                 if qX + matrix[0][i] * counter < 0 or qY + matrix[1][i] * counter < 0:
+#                     raise Error
+#                 table[qX + matrix[0][i] * counter][qY + matrix[1][i] * counter] = "*"
+#             except:
+#                 break
+#             finally:
+#                 counter += 1
+
+#     table[mask[string[0]]][int(string[1])] = "Q"
+#     for arr in table:
+#         for item in arr:
+#             print("{}\t".format(item), end="")
+#         print()
+
+
+# drawTable(string)
+
+# TelegramBot:
+
+import telebot
+
+bot = telebot.TeleBot("5655783257:AAGU6Mq_EAVMPTojKN8x2OnUjkCNHPMzzxI")
+
+
+@bot.message_handler(content_types=["text", "document", "audio"])
+def get_text_messages(message):
+    if message.text == "Привет":
+        bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
+    elif message.text == "/help":
+        bot.send_message(message.from_user.id, "Напиши привет")
+    else:
+        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+
+
+bot.polling(none_stop=True, interval=0)
